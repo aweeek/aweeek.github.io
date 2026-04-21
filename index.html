@@ -1,72 +1,850 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
+<html lang="zh-CN">
+<head>
     <meta charset="UTF-8">
-    <title>国际支教基金会 by aweeek</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">国际支教基金会</h1>
-      <h2 class="project-tagline">INTENATIONAL VOLUNTARY TEACHING FOUNDATION</h2>
-    </section>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人博客系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .left-column, .right-column {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #3498db;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .posts-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .post-item {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        
+        .post-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .post-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .post-meta {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .post-content {
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .post-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .comment-section {
+            margin-top: 30px;
+        }
+        
+        .comment-form {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .comment-list {
+            margin-top: 20px;
+        }
+        
+        .comment-item {
+            border-left: 3px solid #3498db;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .comment-author {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .comment-date {
+            color: #7f8c8d;
+            font-size: 0.85rem;
+        }
+        
+        .comment-content {
+            margin-top: 8px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .alert {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: #7f8c8d;
+            padding: 40px 20px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .post-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-draft {
+            background: #f1c40f;
+            color: #000;
+        }
+        
+        .status-published {
+            background: #2ecc71;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>我的个人博客</h1>
+            <p class="tagline">记录思考，分享知识，与世界对话</p>
+        </header>
+        
+        <div class="main-content">
+            <!-- 左侧：博客撰写和草稿管理 -->
+            <div class="left-column">
+                <h2>撰写新博客</h2>
+                <form id="blogForm">
+                    <div class="form-group">
+                        <label for="title">博客标题</label>
+                        <input type="text" id="title" placeholder="输入一个吸引人的标题..." maxlength="100" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="author">作者</label>
+                        <input type="text" id="author" placeholder="您的名字" value="匿名作者" maxlength="50" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">分类</label>
+                        <select id="category" required>
+                            <option value="">请选择分类</option>
+                            <option value="技术">技术</option>
+                            <option value="生活">生活</option>
+                            <option value="旅行">旅行</option>
+                            <option value="思考">思考</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="content">博客内容</label>
+                        <textarea id="content" placeholder="在这里写下您的博客内容..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="status">状态</label>
+                        <select id="status" required>
+                            <option value="draft">保存为草稿</option>
+                            <option value="published">立即发布</option>
+                        </select>
+                    </div>
+                    
+                    <input type="hidden" id="postId" value="">
+                    
+                    <div id="alertMessage" class="alert hidden"></div>
+                    
+                    <div class="btn-group">
+                        <button type="submit" class="btn" id="saveBtn">保存</button>
+                        <button type="button" class="btn" id="publishBtn">发布</button>
+                        <button type="button" class="btn btn-danger" id="clearBtn">清空</button>
+                    </div>
+                </form>
+                
+                <div class="drafts-container" style="margin-top: 30px;">
+                    <h2>草稿箱</h2>
+                    <div id="draftsList" class="posts-container">
+                        <!-- 草稿将通过JS动态加载 -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 右侧：已发布的博客和评论 -->
+            <div class="right-column">
+                <h2>已发布的博客</h2>
+                <div id="publishedPosts" class="posts-container">
+                    <!-- 已发布的博客将通过JS动态加载 -->
+                </div>
+                
+                <div id="selectedPost" class="hidden">
+                    <div id="postDetail">
+                        <!-- 博客详情将通过JS动态加载 -->
+                    </div>
+                    
+                    <div class="comment-section">
+                        <h3>评论</h3>
+                        
+                        <div class="comment-form">
+                            <h4>发表评论</h4>
+                            <form id="commentForm">
+                                <div class="form-group">
+                                    <label for="commentAuthor">昵称</label>
+                                    <input type="text" id="commentAuthor" placeholder="您的昵称" value="匿名用户" maxlength="30" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="commentContent">评论内容</label>
+                                    <textarea id="commentContent" placeholder="写下您的评论..." rows="3" required></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn">提交评论</button>
+                            </form>
+                        </div>
+                        
+                        <div class="comment-list">
+                            <h4>所有评论</h4>
+                            <div id="commentsContainer">
+                                <!-- 评论将通过JS动态加载 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2026 个人博客系统 | 数据存储在您的浏览器本地，刷新页面不会丢失</p>
+        </footer>
+    </div>
 
-    <section class="main-content">
-      <p><img src="http://r.photo.store.qq.com/psb?/V14eG8ub4LrtE0/eApE9or.ILM6MExn*8Bw13L2vUccARbgB4n5P.odsIs!/r/dKwAAAAAAAAA" alt=""></p>
-
-<h3>
-<a id="我们" class="anchor" href="#%E6%88%91%E4%BB%AC" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>我们</strong>
-</h3>
-
-<h3>
-<a id="相信" class="anchor" href="#%E7%9B%B8%E4%BF%A1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>相信</strong>
-</h3>
-
-<h3>
-<a id="教育改变命运" class="anchor" href="#%E6%95%99%E8%82%B2%E6%94%B9%E5%8F%98%E5%91%BD%E8%BF%90" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>教育改变命运</strong>
-</h3>
-
-<p><img src="http://r.photo.store.qq.com/psb?/V14eG8ub4LrtE0/00OH*y1TMPefY4S4gr4nYAyMM7suhhzX7jSGhZlwWbE!/r/dKwAAAAAAAAA" alt=""></p>
-
-<h3>
-<a id="我们-1" class="anchor" href="#%E6%88%91%E4%BB%AC-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>我们</strong>
-</h3>
-
-<h3>
-<a id="相信-1" class="anchor" href="#%E7%9B%B8%E4%BF%A1-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>相信</strong>
-</h3>
-
-<h3>
-<a id="每个孩子都能成才" class="anchor" href="#%E6%AF%8F%E4%B8%AA%E5%AD%A9%E5%AD%90%E9%83%BD%E8%83%BD%E6%88%90%E6%89%8D" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>每个孩子都能成才</strong>
-</h3>
-
-<p><img src="http://r.photo.store.qq.com/psb?/V14eG8ub4LrtE0/OATSnwEPtDt6UIBRNUnrkfC0lxyWkFJEh6YvuDPOo1I!/r/dPgAAAAAAAAA" alt=""></p>
-
-<h3>
-<a id="我们-2" class="anchor" href="#%E6%88%91%E4%BB%AC-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>我们</strong>
-</h3>
-
-<h3>
-<a id="相信-2" class="anchor" href="#%E7%9B%B8%E4%BF%A1-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>相信</strong>
-</h3>
-
-<h3>
-<a id="慈善改变命运" class="anchor" href="#%E6%85%88%E5%96%84%E6%94%B9%E5%8F%98%E5%91%BD%E8%BF%90" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>慈善改变命运</strong>
-</h3>
-
-<p><img src="http://r.photo.store.qq.com/psb?/V14eG8ub4LrtE0/nI9x.AD2hrS8Sgjx.EBPvpJdlDst5IqhaeXGZf9CQTQ!/r/dPYAAAAAAAAA" alt=""></p>
-
-      <footer class="site-footer">
-
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
-
-    </section>
-
-  
-  </body>
+    <script>
+        // 初始化数据存储
+        class BlogSystem {
+            constructor() {
+                this.posts = this.loadFromStorage('blogPosts') || [];
+                this.comments = this.loadFromStorage('blogComments') || [];
+                this.currentPostId = null;
+                this.init();
+            }
+            
+            // 从localStorage加载数据
+            loadFromStorage(key) {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : null;
+            }
+            
+            // 保存到localStorage
+            saveToStorage(key, data) {
+                localStorage.setItem(key, JSON.stringify(data));
+            }
+            
+            // 初始化
+            init() {
+                this.renderDrafts();
+                this.renderPublishedPosts();
+                this.bindEvents();
+                
+                // 加载示例数据（如果为空）
+                if (this.posts.length === 0) {
+                    this.loadSampleData();
+                }
+            }
+            
+            // 绑定事件
+            bindEvents() {
+                // 保存/发布博客
+                document.getElementById('blogForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveBlogPost();
+                });
+                
+                // 发布按钮单独事件
+                document.getElementById('publishBtn').addEventListener('click', () => {
+                    document.getElementById('status').value = 'published';
+                    this.saveBlogPost();
+                });
+                
+                // 清空表单
+                document.getElementById('clearBtn').addEventListener('click', () => {
+                    this.clearForm();
+                });
+                
+                // 提交评论
+                document.getElementById('commentForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.addComment();
+                });
+            }
+            
+            // 保存博客文章
+            saveBlogPost() {
+                const postId = document.getElementById('postId').value;
+                const title = document.getElementById('title').value.trim();
+                const author = document.getElementById('author').value.trim();
+                const category = document.getElementById('category').value;
+                const content = document.getElementById('content').value.trim();
+                const status = document.getElementById('status').value;
+                
+                if (!title || !content || !category) {
+                    this.showAlert('请填写所有必填字段！', 'error');
+                    return;
+                }
+                
+                const now = new Date();
+                const post = {
+                    id: postId || Date.now().toString(),
+                    title,
+                    author,
+                    category,
+                    content,
+                    status,
+                    createdAt: postId ? this.getPostById(postId).createdAt : now.toISOString(),
+                    updatedAt: now.toISOString(),
+                    publishedAt: status === 'published' ? now.toISOString() : null
+                };
+                
+                // 更新或添加文章
+                const index = this.posts.findIndex(p => p.id === postId);
+                if (index !== -1) {
+                    this.posts[index] = post;
+                } else {
+                    this.posts.unshift(post);
+                }
+                
+                // 保存到storage
+                this.saveToStorage('blogPosts', this.posts);
+                
+                // 重新渲染
+                this.renderDrafts();
+                this.renderPublishedPosts();
+                
+                // 显示成功消息
+                const message = status === 'published' ? '博客已成功发布！' : '博客已保存为草稿！';
+                this.showAlert(message, 'success');
+                
+                // 如果是发布状态，清空表单
+                if (status === 'published') {
+                    this.clearForm();
+                    
+                    // 如果是当前正在查看的文章，更新显示
+                    if (postId && this.currentPostId === postId) {
+                        this.showPostDetail(postId);
+                    }
+                }
+            }
+            
+            // 加载示例数据
+            loadSampleData() {
+                const samplePosts = [
+                    {
+                        id: '1',
+                        title: '欢迎来到我的博客系统',
+                        author: '系统管理员',
+                        category: '技术',
+                        content: '这是一个使用HTML、CSS和JavaScript构建的个人博客系统。所有数据都存储在您的浏览器本地，刷新页面不会丢失。您可以撰写、发布博客文章，并添加评论。',
+                        status: 'published',
+                        createdAt: '2026-01-15T10:30:00Z',
+                        updatedAt: '2026-01-15T10:30:00Z',
+                        publishedAt: '2026-01-15T10:30:00Z'
+                    },
+                    {
+                        id: '2',
+                        title: '前端开发的未来趋势',
+                        author: '前端探索者',
+                        category: '技术',
+                        content: '随着Web技术的不断发展，前端开发领域正经历着翻天覆地的变化。AI辅助编程、WebAssembly、服务器端渲染等技术正在重塑我们的开发方式。在这篇文章中，我将探讨未来几年前端开发的主要趋势。',
+                        status: 'published',
+                        createdAt: '2026-02-20T14:15:00Z',
+                        updatedAt: '2026-02-20T14:15:00Z',
+                        publishedAt: '2026-02-20T14:15:00Z'
+                    },
+                    {
+                        id: '3',
+                        title: '一篇未完成的草稿',
+                        author: '匿名作者',
+                        category: '思考',
+                        content: '这是关于生活的一些思考，还未完成...',
+                        status: 'draft',
+                        createdAt: '2026-03-10T09:20:00Z',
+                        updatedAt: '2026-03-10T09:20:00Z',
+                        publishedAt: null
+                    }
+                ];
+                
+                const sampleComments = [
+                    {
+                        id: '1',
+                        postId: '1',
+                        author: '访客',
+                        content: '这个博客系统很棒！界面简洁，功能实用。',
+                        createdAt: '2026-01-16T08:45:00Z'
+                    },
+                    {
+                        id: '2',
+                        postId: '1',
+                        author: '技术爱好者',
+                        content: '使用localStorage存储数据是一个聪明的做法，虽然不适合生产环境，但作为演示足够了。',
+                        createdAt: '2026-01-16T14:20:00Z'
+                    },
+                    {
+                        id: '3',
+                        postId: '2',
+                        author: '开发者',
+                        content: '关于WebAssembly的部分写得很好，期待看到更多相关内容。',
+                        createdAt: '2026-02-21T11:30:00Z'
+                    }
+                ];
+                
+                this.posts = samplePosts;
+                this.comments = sampleComments;
+                
+                this.saveToStorage('blogPosts', this.posts);
+                this.saveToStorage('blogComments', this.comments);
+                
+                this.renderDrafts();
+                this.renderPublishedPosts();
+            }
+            
+            // 清空表单
+            clearForm() {
+                document.getElementById('blogForm').reset();
+                document.getElementById('postId').value = '';
+                document.getElementById('author').value = '匿名作者';
+                document.getElementById('status').value = 'draft';
+                document.getElementById('alertMessage').classList.add('hidden');
+            }
+            
+            // 编辑博客文章
+            editPost(postId) {
+                const post = this.getPostById(postId);
+                if (!post) return;
+                
+                document.getElementById('postId').value = post.id;
+                document.getElementById('title').value = post.title;
+                document.getElementById('author').value = post.author;
+                document.getElementById('category').value = post.category;
+                document.getElementById('content').value = post.content;
+                document.getElementById('status').value = post.status;
+                
+                // 滚动到顶部
+                document.querySelector('.left-column').scrollIntoView({ behavior: 'smooth' });
+                
+                this.showAlert('正在编辑博客文章...', 'success');
+            }
+            
+            // 删除博客文章
+            deletePost(postId) {
+                if (!confirm('确定要删除这篇博客文章吗？此操作不可撤销。')) {
+                    return;
+                }
+                
+                this.posts = this.posts.filter(p => p.id !== postId);
+                this.comments = this.comments.filter(c => c.postId !== postId);
+                
+                this.saveToStorage('blogPosts', this.posts);
+                this.saveToStorage('blogComments', this.comments);
+                
+                this.renderDrafts();
+                this.renderPublishedPosts();
+                
+                // 如果删除的是当前查看的文章，隐藏详情
+                if (this.currentPostId === postId) {
+                    this.hidePostDetail();
+                }
+                
+                this.showAlert('博客文章已删除！', 'success');
+            }
+            
+            // 发布草稿
+            publishDraft(postId) {
+                const post = this.getPostById(postId);
+                if (!post) return;
+                
+                post.status = 'published';
+                post.updatedAt = new Date().toISOString();
+                post.publishedAt = new Date().toISOString();
+                
+                this.saveToStorage('blogPosts', this.posts);
+                
+                this.renderDrafts();
+                this.renderPublishedPosts();
+                
+                this.showAlert('博客文章已发布！', 'success');
+            }
+            
+            // 显示博客详情
+            showPostDetail(postId) {
+                this.currentPostId = postId;
+                const post = this.getPostById(postId);
+                if (!post) return;
+                
+                const postDetailEl = document.getElementById('postDetail');
+                const comments = this.getCommentsByPostId(postId);
+                
+                const date = new Date(post.publishedAt || post.createdAt);
+                const formattedDate = date.toLocaleString('zh-CN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                postDetailEl.innerHTML = `
+                    <h2>${post.title}</h2>
+                    <div class="post-meta">
+                        <span>作者: ${post.author}</span> | 
+                        <span>分类: ${post.category}</span> | 
+                        <span>发布时间: ${formattedDate}</span>
+                        <span class="post-status status-published">已发布</span>
+                    </div>
+                    <div class="post-content">
+                        ${post.content.replace(/\n/g, '<br>')}
+                    </div>
+                `;
+                
+                // 渲染评论
+                this.renderComments(postId);
+                
+                // 显示评论区域
+                document.getElementById('selectedPost').classList.remove('hidden');
+                
+                // 滚动到评论区域
+                document.querySelector('.comment-section').scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            // 隐藏博客详情
+            hidePostDetail() {
+                document.getElementById('selectedPost').classList.add('hidden');
+                this.currentPostId = null;
+            }
+            
+            // 添加评论
+            addComment() {
+                if (!this.currentPostId) {
+                    this.showAlert('请先选择一篇博客文章！', 'error');
+                    return;
+                }
+                
+                const author = document.getElementById('commentAuthor').value.trim();
+                const content = document.getElementById('commentContent').value.trim();
+                
+                if (!author || !content) {
+                    this.showAlert('请填写昵称和评论内容！', 'error');
+                    return;
+                }
+                
+                const comment = {
+                    id: Date.now().toString(),
+                    postId: this.currentPostId,
+                    author,
+                    content,
+                    createdAt: new Date().toISOString()
+                };
+                
+                this.comments.unshift(comment);
+                this.saveToStorage('blogComments', this.comments);
+                
+                // 清空评论表单
+                document.getElementById('commentForm').reset();
+                document.getElementById('commentAuthor').value = '匿名用户';
+                
+                // 重新渲染评论
+                this.renderComments(this.currentPostId);
+                
+                this.showAlert('评论已发布！', 'success');
+            }
+            
+            // 渲染草稿
+            renderDrafts() {
+                const drafts = this.posts.filter(p => p.status === 'draft');
+                const draftsListEl = document.getElementById('draftsList');
+                
+                if (drafts.length === 0) {
+                    draftsListEl.innerHTML = '<div class="empty-state">暂无草稿</div>';
+                    return;
+                }
+                
+                draftsListEl.innerHTML = drafts.map(post => {
+                    const date = new Date(post.updatedAt);
+                    const formattedDate = date.toLocaleDateString('zh-CN');
+                    
+                    return `
+                        <div class="post-item">
+                            <div class="post-title">${post.title}</div>
+                            <div class="post-meta">
+                                ${post.author} | ${post.category} | ${formattedDate}
+                                <span class="post-status status-draft">草稿</span>
+                            </div>
+                            <div class="post-content">${post.content.substring(0, 100)}${post.content.length > 100 ? '...' : ''}</div>
+                            <div class="post-actions">
+                                <button class="btn" onclick="blogSystem.editPost('${post.id}')">编辑</button>
+                                <button class="btn" onclick="blogSystem.publishDraft('${post.id}')">发布</button>
+                                <button class="btn btn-danger" onclick="blogSystem.deletePost('${post.id}')">删除</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            // 渲染已发布的博客
+            renderPublishedPosts() {
+                const published = this.posts.filter(p => p.status === 'published');
+                const postsContainerEl = document.getElementById('publishedPosts');
+                
+                if (published.length === 0) {
+                    postsContainerEl.innerHTML = '<div class="empty-state">暂无发布的博客</div>';
+                    return;
+                }
+                
+                postsContainerEl.innerHTML = published.map(post => {
+                    const date = new Date(post.publishedAt);
+                    const formattedDate = date.toLocaleDateString('zh-CN');
+                    
+                    return `
+                        <div class="post-item">
+                            <div class="post-title">${post.title}</div>
+                            <div class="post-meta">
+                                ${post.author} | ${post.category} | ${formattedDate}
+                                <span class="post-status status-published">已发布</span>
+                            </div>
+                            <div class="post-content">${post.content.substring(0, 150)}${post.content.length > 150 ? '...' : ''}</div>
+                            <div class="post-actions">
+                                <button class="btn" onclick="blogSystem.showPostDetail('${post.id}')">查看详情与评论</button>
+                                <button class="btn" onclick="blogSystem.editPost('${post.id}')">编辑</button>
+                                <button class="btn btn-danger" onclick="blogSystem.deletePost('${post.id}')">删除</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            // 渲染评论
+            renderComments(postId) {
+                const comments = this.getCommentsByPostId(postId);
+                const commentsContainerEl = document.getElementById('commentsContainer');
+                
+                if (comments.length === 0) {
+                    commentsContainerEl.innerHTML = '<div class="empty-state">暂无评论，快来发表第一条评论吧！</div>';
+                    return;
+                }
+                
+                commentsContainerEl.innerHTML = comments.map(comment => {
+                    const date = new Date(comment.createdAt);
+                    const formattedDate = date.toLocaleString('zh-CN', {
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    return `
+                        <div class="comment-item">
+                            <div class="comment-author">${comment.author}</div>
+                            <div class="comment-date">${formattedDate}</div>
+                            <div class="comment-content">${comment.content.replace(/\n/g, '<br>')}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            // 根据ID获取博客文章
+            getPostById(id) {
+                return this.posts.find(p => p.id === id);
+            }
+            
+            // 根据文章ID获取评论
+            getCommentsByPostId(postId) {
+                return this.comments
+                    .filter(c => c.postId === postId)
+                    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            }
+            
+            // 显示提示消息
+            showAlert(message, type) {
+                const alertEl = document.getElementById('alertMessage');
+                alertEl.textContent = message;
+                alertEl.className = `alert alert-${type === 'error' ? 'error' : 'success'}`;
+                alertEl.classList.remove('hidden');
+                
+                // 5秒后自动隐藏
+                setTimeout(() => {
+                    alertEl.classList.add('hidden');
+                }, 5000);
+            }
+        }
+        
+        // 初始化博客系统
+        const blogSystem = new BlogSystem();
+        
+        // 为了方便在HTML中调用，将blogSystem设为全局变量
+        window.blogSystem = blogSystem;
+    </script>
+</body>
 </html>
